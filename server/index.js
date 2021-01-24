@@ -3,17 +3,29 @@ const socketio = require('socket.io');
 const http = require('http');
 const PORT = process.env.port || 8000;
 const app = express();
+const cors = require('cors');
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+});
 const router = require('./router');
 
 app.use(router);
+//app.use(cors());
 
 io.on('connection',(socket)=> {
 
     console.log('a new user has joined!!');
     
-    io.on('disconnect',() => {
+    socket.on('join',({ name , room },callback) => {
+        console.log(name , room);
+        
+        callback({err:'there is error'})
+    })
+    socket.on('disconnect',() => {
         console.log('user has disconnected!!');
     })
 })
