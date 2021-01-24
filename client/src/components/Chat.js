@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { io } from 'socket.io-client';
-
+import { io, Manager } from 'socket.io-client';
+import InfoBar from './InfoBar.js';
 import queryString from 'query-string';
+import Input from './Input.js';
+import Messages from './Messages.js';
 
 let socket;
 
@@ -48,7 +50,7 @@ const Chat = () => {
         console.log(e.target.value);
     }
     const sendMessage = (e) => {
-      // e.preventDefault();
+       e.preventDefault();
       if(message)
       {
           socket.emit('sendMessage',message,()=>setMessage(''));
@@ -59,8 +61,11 @@ const Chat = () => {
     return (
         <div className = "outerChatContainer">
             <div className = "innerChatContainer">
+                <InfoBar room = {room} />
                 {/* to handle input as controlled component, we need to set its value to message  */}
-                <input type = "text"  value = {message} onChange = {(e)=>setMessage(e.target.value)} onKeyPress = {(e)=>e.key==="Enter"?sendMessage(e): null} />
+                <Messages  messages = {messages} name = {name} />
+                <Input  message = {message} setMessage = {setMessage} sendMessage = {sendMessage} /> 
+                {/* <input type = "text"  value = {message} onChange = {(e)=>setMessage(e.target.value)} onKeyPress = {(e)=>e.key==="Enter"?sendMessage(e): null} /> */}
             </div>
         </div>
         )

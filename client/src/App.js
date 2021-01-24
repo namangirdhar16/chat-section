@@ -3,6 +3,8 @@ import { BrowserRouter , Route } from 'react-router-dom';
 
 import Chat from './components/Chat.js';
 import Join from './components/Join.js';
+import InfoBar from './components/InfoBar.js';
+
 const App = () => {
     return (
         <BrowserRouter>
