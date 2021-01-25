@@ -4,22 +4,30 @@ const Message = ({ message , name }) => {
    
     let sentByCurrentUser = false;
     const trimmedName = name.trim().toLowerCase();
-
-    if(message.user == trimmedName)
+    console.log(name);
+    console.log(message.user.name);
+    if(message.user.name === trimmedName)
     sentByCurrentUser = true;
     console.log(message , name);
-    return(
-        sentByCurrentUser ? (
-            <div className = "rightPositined">
-                <p>{trimmedName}</p>
+    
+    const renderElement = (sentByCurrentUser) => {
+        return (
+            sentByCurrentUser ? (
+                <div className = "rightPositined" >
+                    <p>{trimmedName}</p>
+                    <div>{message.text}</div>
+                </div>
+            ) : (
+                <div className = "leftPositined" >
+                <p>{message.user.name}</p>
                 <div>{message.text}</div>
-            </div>
-        ) : (
-            <div className = "leftPositined">
-            <p>{message.user}</p>
-            <div>{message.text}</div>
-            </div>
+                </div>
+            )
         )
+    }
+    return(
+        
+       <div>{renderElement(sentByCurrentUser)}</div>
     )
 }
 
